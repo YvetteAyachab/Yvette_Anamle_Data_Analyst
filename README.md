@@ -192,6 +192,82 @@ Figure: 1.6 Catalog table
 Note:screenshot taken from my aws console
 
 
+**Data summarization**
+
+Data summarization is performed using an ETL (Extract, Transform, Load) job that processes raw data, applies various transformations, and loads the structured data into designated storage for further use. This process not only enhances data quality but also provides a visual flow that facilitates analytics and reporting.
+
+1. Data Extraction
+
+The ETL job retrieves data from the AWS Glue Data Catalog, ensuring that the latest and most relevant datasets are accessed. This step is crucial for maintaining consistency across multiple data sources.
+
+2. Data Transformation
+
+Several transformation steps are applied to clean, structure, and summarize the data before it is stored. These steps include:
+
+a. Schema Adjustments
+
+Drop Unnecessary Columns: To maintain compatibility and efficiency, the following columns are removed:
+
+Latitude
+
+Longitude
+
+Geo
+
+b. Filtering Records
+
+Data is filtered based on the status field, ensuring that only relevant records that match the specified criteria are retained. For example, records from specific locations such as:
+
+Local Area
+
+Downtown
+
+c. Date Transformation
+
+The license issued date is transformed to only retain the year for better summarization and trend analysis.
+
+A new field, Report_Date, is added to the summary to provide a timestamp for tracking processed records.
+
+Report_Date is then converted to Report_Date_LTZ to align with the required time zone formatting.
+
+d. Aggregation and Grouping
+
+Data is grouped by the "department" field to create structured summaries.
+
+The aggregation function computes the average ("avg") of the "service_request_open_timestamp" field, helping to analyze service request response times.
+
+e. Final Schema Preparation
+
+After the transformations, the Report_Date column is removed to finalize the schema before loading.
+
+3. Data Loading
+
+Once the transformed data is ready, it is loaded into different destinations for structured storage and further usage:
+
+System Logs Target:
+
+Data is converted into a single structured file format for system logging purposes.
+
+This structured log enables better monitoring and debugging.
+
+User Data Target:
+
+The final transformed dataset is loaded into Amazon S3 (Sev-req-cur-yve) for user access.
+
+This dataset is structured for ease of access, reporting, and visualization.
+
+Figure: 1.7  Service request visual ETL
+
+<img width="611" alt="Service request summarization " src="https://github.com/user-attachments/assets/e2e7bc7b-55de-418e-9c41-98f07d1579f3" />
+
+Note:screenshot taken from my aws console
+
+
+
+
+
+
+
 
 
 
