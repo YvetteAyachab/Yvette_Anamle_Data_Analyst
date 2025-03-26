@@ -3,6 +3,9 @@ Descriptive Analysis
 
 Project Description: Descriptive Analysis of 3-1-1 service request of the city of vancouver.
 
+Project Title: Analyzing 3-1-1 Service Requests: Trends and Geographic Distribution
+
+
 
 
 
