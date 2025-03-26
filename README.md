@@ -265,6 +265,18 @@ Note:screenshot taken from my aws console
 
 
 
+Figure: 1.8 ETL jobs output schema 
+
+<img width="622" alt="ETL jobs output schema " src="https://github.com/user-attachments/assets/fab7b1cb-e850-4aa3-bc27-d5e3590ba4ef" />
+
+Note:screenshot taken from my aws console
+
+
+
+
+
+
+
 
 
 
