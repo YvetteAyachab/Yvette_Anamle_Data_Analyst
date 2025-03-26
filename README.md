@@ -103,6 +103,8 @@ Figure: 1.2  Data profile overview
 
 Note:screenshot taken from my aws console
 
+
+
 **Data Cleaning**
 
 Data cleaning is an essential step in the data analysis process that enhances the quality, consistency, and reliability of a dataset. Clean data ensures accurate insights and reduces errors in downstream processing and analysis. Given the nature of the dataset, specific cleaning operations are performed to standardize and improve the data. The entire cleaning process is documented and stored in the service-request-trf-yve transformation bucket.
@@ -141,11 +143,26 @@ Local_area: Missing values replaced with "N/A" to indicate unrecorded areas.
 Latitude & Longitude: Missing values replaced with their respective average values to maintain geographical consistency.
 
 
+
 Figure: 1.3 Successful cleaning job 
 
 <img width="749" alt="Cleaning recipe " src="https://github.com/user-attachments/assets/4d5a41b2-5780-435b-b6e6-16e60fef2eb6" />
 
 Note:screenshot taken from my aws console
+
+
+
+Figure 1.4 provides a detailed view of a successful job run for the data cleaning process, confirming that all cleaning steps were executed without errors. This includes column renaming, handling missing values, and standardizing data formats to improve overall data quality. The successful completion of the job run ensures that the dataset is well-structured, accurate, and ready for further analysis
+
+
+
+Figure: 1.4 Successful cleaning job 
+
+<img width="730" alt="Successful cleaning job  " src="https://github.com/user-attachments/assets/eb36e1df-8eed-4c88-ae3a-5ed8ca78f7d3" />
+
+Note:screenshot taken from my aws console
+
+
 
 
 
