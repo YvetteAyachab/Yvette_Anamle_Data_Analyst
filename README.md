@@ -568,6 +568,264 @@ Figure 2.15 Cloud Trail for S3 Bucket
 Note:screenshot taken from my aws console
 
 
+# 3-	Data Visualization
+
+
+
+# 4-	Customer Segmentation
+
+1. Segment Service Requests by Frequency
+High-volume request types:
+The analysis found that the most common service request was “Vegetation Encroachment of City Property Cases”, followed by “Abandoned Non-Recyclables – Small Cases”. These are high-frequency issues.
+
+2. Trends Across Local Areas
+The document states:
+"Downtown had the highest with call type Abandoned Non-Recyclables – Small Case."
+This indicates that Downtown experiences a higher frequency of certain request types compared to other neighborhoods.
+
+3. Request Types by Time Patterns
+The dataset uses partitioning by year, quarter, month, day, enabling seasonal analysis.The data structure is set up to analyze time-based trends, such as:
+
+Increases in vegetation encroachment during growing seasons (spring/summer).
+
+Spikes in abandoned item reports post-holiday seasons.
+
+Departments with Highest Volume of Service Requests
+During data summarization, the document notes:
+“Grouped by the 'department' field, the aggregation function is set to compute the average of the service_request_open_timestamp.”
+This indicates that request volumes by department were aggregated. While exact department names aren't listed in the excerpt, the ETL setup enables identification of which departments handle the most requests.
+
+
+Assess Request Closure Times Across Segments
+The dataset includes:
+Service_request_open_timestamp
+Service_request_close_date
+These fields are used to assess request lifecycle duration. Though exact closure time stats aren't shown, the document indicates that the data is available and structured to calculate average or median closure times—which can highlight inefficiencies or delays.
+
+
+# 5-	Insights and Findings
+
+1. High-Frequency Service Request Types
+   
+Analysis of the service request data revealed that “Vegetation Encroachment on City Property” is the most frequently reported issue. This may include overgrown hedges, tree branches blocking signs, or plants spilling onto sidewalks, which can impact pedestrian safety and visibility.
+
+The second most reported issue is “Abandoned Non-Recyclable Small Items”, such as furniture, mattresses, or miscellaneous debris left in public spaces.
+These types of requests reflect both environmental maintenance challenges and possible gaps in public awareness or enforcement regarding disposal guidelines.
+
+Implications:
+
+Increased investment in routine landscaping and vegetation control.
+
+Improved public education campaigns or enforcement around proper disposal practices.
+
+2. Geographic Distribution of Requests
+   
+The data showed clear geographic concentration patterns, with Downtown Vancouver recording the highest number of service requests, particularly those related to abandoned items.
+
+This is expected due to the higher population density, commercial activity, and public foot traffic.
+Other neighborhoods may report fewer issues, but this might not always reflect lower problem incidence, it could suggest underreporting or less awareness of the 3-1-1 system.
+
+Implications:
+
+Consider allocating more resources (e.g., crews, budget) to Downtown.
+
+Launch outreach programs in lower-reporting areas to educate residents on how to use the 3-1-1 service effectively.
+
+3. Temporal Patterns in Request Types
+   
+Although explicit seasonal data isn’t included, the platform supports partitioning requests by year, quarter, month, and day, making it ideal for identifying seasonal or time-based trends:
+
+Vegetation encroachment likely spikes in spring and summer, during peak growth periods.
+Abandoned items may rise during student move-outs, holiday seasons, or end-of-month cycles (when renters often move).
+
+Implications:
+
+Predictive planning for seasonal staffing and equipment allocation.
+
+Run public education campaigns before high-incident periods (e.g., spring cleanups or moving seasons).
+
+
+4. Service Efficiency and Request Closure Times
+By analyzing the service_request_open_timestamp and service_request_close_date, the system can track how long it takes to resolve each request.
+
+Segmenting closure times by request type, local area, or department can reveal:
+
+Backlogs or inefficiencies
+
+Underperforming zones
+
+Types of requests that typically face delays
+
+Implications:
+
+Define target service level agreements (SLAs) based on request categories.
+
+Investigate long-closure-time segments to uncover root causes (e.g., contractor delays, unclear responsibility, or resource constraints).
+
+5. Robust Data Infrastructure Enables Scalable Analysis
+The data processing pipeline built using Amazon S3, AWS Glue, Athena, and DataBrew provides:
+
+A scalable, secure, and organized data lake.
+
+Real-time updates and automation in data cleaning, profiling, and transformation.
+
+Structured outputs for both system-level and user-level analysis.
+
+Implications:
+
+This platform supports not just descriptive analytics but also predictive modeling, dashboarding, and automated reporting.
+
+Data integrity is maintained through AWS Key Management Service (KMS), versioning, and backup policies.
+
+# 6-	Recommendations
+
+**Strategic Resource and Inventory Management**
+   
+Based on the findings that vegetation encroachment and abandoned non-recyclable small items are the most frequently reported service requests, it is essential to optimize the allocation of tools, equipment, and maintenance personnel. The city should consider proactively managing inventories such as pruning tools, garbage collection equipment, and signage in areas with historically high service volumes, especially Downtown Vancouver. Additionally, leveraging seasonal and timestamp data will help forecast peak service periods, enabling advanced planning for resource stocking and workforce scheduling. This will reduce emergency dispatches and improve the city’s ability to respond quickly to recurring issues, leading to cost savings and better public satisfaction.
+
+ 
+ **Geo-Targeted Public Awareness Campaigns**
+ 
+The data shows a significant clustering of service requests in specific areas, such as Downtown, which faces frequent reports of abandoned items. This calls for tailored, localized campaigns to raise awareness about civic responsibilities, proper waste disposal, and how to use the 3-1-1 service efficiently. Using targeted communication channels such as digital ads, posters, community meetings, and local influencers can help reinforce messaging. Conversely, areas with lower reporting rates may not necessarily face fewer problems but might lack awareness or access to the system. Educational outreach in these neighborhoods, especially in underserved communities can promote equity in public service access and improve data reliability.
+
+
+
+**Seasonal Promotional Campaigns**
+
+Given the system’s ability to partition data by time (year, quarter, month, day), the city can identify and prepare for seasonal trends such as vegetation overgrowth in spring or spikes in abandoned item reports during the holidays or end-of-lease periods. Promotional campaigns aligned with these patterns—such as “Spring Clean Weeks” or “Moving Season Waste Reduction” can preemptively mitigate service requests through public cooperation. These campaigns should be timed and promoted using digital platforms, local newspapers, and neighborhood associations, encouraging citizens to take preventive action. Partnering with schools, residential buildings, and community organizations will further amplify these seasonal efforts and reduce overall service demand.
+
+
+**Departmental Performance Campaigns**
+
+As the data architecture allows for request volumes to be grouped by department, performance benchmarking can be introduced to evaluate which departments manage the highest service loads and how efficiently they close requests. Departments demonstrating strong performance should be recognized through internal acknowledgments or public campaigns that highlight successful city services. Conversely, departments facing delays or large volumes should be given targeted support, along with performance incentives or internal engagement initiatives such as “Efficiency Challenges.” These campaigns not only improve morale but also foster a culture of continuous improvement and accountability within city operations.
+
+
+
+**Predictive Planning and Budget Justification**
+
+The structured and clean dataset offers a unique opportunity for predictive analytics that can forecast upcoming service spikes, helping city managers make data-driven budget and planning decisions. Historical patterns, closure time analyses, and geographic clusters provide a foundation for creating predictive models to anticipate future needs. The city can use this information to advocate for additional resources where needed, reallocate budgets based on seasonal or location-based forecasts, and justify capital expenditures for technology, personnel, or infrastructure enhancements. Decision-makers will be better equipped to prioritize initiatives that align with actual service trends rather than assumptions.
+
+
+**Digital Engagement and App-Based Reporting Campaigns**
+
+As multiple request channels are available—including social media, phone, and potentially a mobile app—the city should encourage broader adoption of faster, digital-first reporting tools. Promoting the use of a 3-1-1 mobile application or web portal can streamline submissions, improve data accuracy, and enable faster triaging of issues. A campaign that highlights the convenience and speed of digital reporting could include online ads, QR codes on public signage, and social media content targeted at tech-savvy demographics. Improving the digital reporting experience also reduces administrative overhead and enhances the ability to collect consistent and structured data for ongoing analysis.
+
+
+# Tools and Technologies
+
+ **Data Storage & Management**
+ 
+Amazon S3 – Stores raw, transformed, and curated datasets.
+
+S3 Buckets – Logical containers used to organize data stages.
+
+S3 Versioning – Maintains historical versions of datasets.
+
+S3 Replication – Enables data backup across regions.
+
+Parquet Format – Efficient columnar storage format for big data.
+
+**Data Processing & Transformation**
+
+AWS Glue – Serverless ETL (Extract, Transform, Load) service.
+
+AWS Glue DataBrew – Visual tool for data cleaning and profiling.
+
+Glue Crawlers – Automatically scan data and populate metadata catalogs
+
+ETL Jobs – Extract, transform, and load data for analytics.
+
+Transform Recipes – Set of rules for cleaning and reformatting data.
+
+Schema Mapping – Aligns raw data structure for analysis.
+
+**Data Partitioning & Organization**
+
+Partitioning by Year/Month/Day – Organizes data for efficient querying.
+
+Column Renaming – Standardizes data field names.
+
+Data Filtering – Focuses analysis on relevant records only.
+
+Data Aggregation – Summarizes values by group or time.
+
+ 
+**Data Profiling & Quality**
+
+Missing Value Handling – Fills blanks with default or frequent values.
+
+Duplicate Detection – Identifies and removes redundant records.
+
+Uniqueness Checks – Ensures data entries are distinct.
+
+Completeness Checks – Validates required data is present.
+
+Freshness Checks – Ensures data is up-to-date.
+
+
+**Analytics & Querying**
+
+Amazon Athena – Serverless SQL tool to query data directly from S3.
+
+SQL Queries – Used to extract insights and patterns.
+
+Grouping & Aggregation Functions – Supports data summarization.
+
+Timestamp Conversion – Used for tracking service lifecycle.
+
+
+**Visualization & Presentation**
+
+draw.io – Used to create diagrams and process visuals.
+
+Metrics Tables – Tabular summaries of service data.
+
+User-Friendly Output Files – Clean formats for stakeholder review.
+
+**Security & Compliance**
+
+AWS Key Management Service (KMS) – Encrypts data at rest.
+
+Bucket Encryption – Protects sensitive data.
+
+AWS CloudTrail – Monitors access and changes for auditing.
+
+Access Controls – Restrict unauthorized data manipulation.
+
+
+**Monitoring & Optimization**
+
+Amazon CloudWatch – Monitors bucket storage and resource usage.
+
+CloudWatch Alarms – Alerts when thresholds are exceeded.
+
+ETL Job Monitoring – Tracks performance and failures in workflows.
+
+Crawler Logs – Provides feedback on schema changes and issues.
+
+
+**Data Output & Reporting**
+
+Curated Outputs – Clean datasets for user reports.
+
+System Outputs – Logs and files for internal processing.
+
+Report Date Field – Used to sort and group final reports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
