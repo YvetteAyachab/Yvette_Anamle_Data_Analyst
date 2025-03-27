@@ -453,6 +453,128 @@ Figure 2.9 Cur Bucket: Data Replication for the S3 bucket
 Note:screenshot taken from my aws console
 
 
+**Data Governance**
+
+ ETL Pipeline
+ 
+To ensure the integrity, reliability, and usability of 3-1-1 service request data, a robust ETL (Extract, Transform, Load) pipeline has been implemented using AWS Glue. This pipeline plays a key role in automating the data preparation process, while also embedding critical data governance principles—particularly around data quality. As shown in Figure 2.10, the ETL job extracts raw data from the S3 raw bucket, applies a series of transformation and validation rules, and then loads the results into categorized output folders within the S3 transformed (trf) bucket.
+
+A major focus of this ETL process is on data quality checks, which are divided into three core dimensions: completeness, uniqueness, and data freshness. These checks are vital to ensure the data meets established thresholds before it is curated for reporting or analytics purposes.
+
+Completeness
+
+Completeness refers to the proportion of non-null, valid values present in key fields. The ETL job checks for:
+
+Address field: must be ≥ 80% complete
+Local area field: must be ≥ 95% complete
+Service request close date: must be ≥ 97% complete
+These thresholds ensure that essential data elements are sufficiently populated to allow for meaningful analysis.
+Uniqueness
+
+Uniqueness checks evaluate the level of data duplication across key fields, which is critical for avoiding redundant records and ensuring analytical accuracy. The applied rules include:
+
+Local area field: must exhibit a uniqueness ratio of greater than 0.04
+Address field: must be ≥ 70% unique
+
+Data Freshness
+
+Freshness checks determine how up-to-date the data is, based on the recency of the service request close date. For this dataset, the acceptable threshold is:
+
+Service request close date: must be ≥ 50% fresh (i.e., not stale or outdated)
+Quality Check Output Handling
+
+Following the execution of these data quality checks, the ETL job segregates records into two distinct folders:
+
+Passed folder: Contains records that meet all specified quality thresholds and are ready for further transformation or analysis.
+
+Failed folder: Stores records that fall short of one or more criteria and may require manual review or reprocessing.
+
+As shown in Figures 2.12 and 2.13, this separation allows for better traceability, error resolution, and data re-validation workflows. It also supports a continuous improvement approach to data governance, where problematic patterns can be identified and addressed over time.
+
+By embedding these data governance rules directly into the ETL pipeline, the solution promotes data trustworthiness, supports operational reporting, and ensures that downstream systems and stakeholders are working with high-quality, reliable data.
+
+
+Figure 2.10 Data brew pipeline for data quality control
+
+<img width="620" alt="Screenshot 2025-03-26 at 8 39 33 PM" src="https://github.com/user-attachments/assets/b3f5a21d-0e7e-4a16-be6b-5ccc8927ad07" />
+
+Note:screenshot taken from my aws console
+
+
+Figure 2.11 Output Schema for the ETL result 
+
+<img width="621" alt="Screenshot 2025-03-26 at 8 42 44 PM" src="https://github.com/user-attachments/assets/b1c1a8a3-e600-41bc-a20a-0eb6f10c989c" />
+
+Note:screenshot taken from my aws console
+
+
+Figure 2.12  Failed Folder in S3 Bucket 
+
+<img width="616" alt="Screenshot 2025-03-26 at 8 45 00 PM" src="https://github.com/user-attachments/assets/c39582be-8212-406a-a8d5-f742e7b2ab1b" />
+
+Note:screenshot taken from my aws console
+
+
+Figure 2.13 Passed Folder in the S3 Bucket 
+
+<img width="626" alt="Screenshot 2025-03-26 at 8 46 17 PM" src="https://github.com/user-attachments/assets/ad2ea1bb-6856-4e13-ab9b-1c5bf1d9125b" />
+
+Note:screenshot taken from my aws console
+
+
+
+**Data Monitoring**
+
+Effective data monitoring is essential for maintaining system performance, managing storage costs, and ensuring the reliability of data pipelines. In this architecture, Amazon CloudWatch is used as the central monitoring tool to track the usage of Amazon S3 storage across three key buckets: raw, transformed (trf), and curated (cur). These buckets represent different stages of the data lifecycle—from ingestion to transformation to final curated datasets ready for analysis.
+
+CloudWatch continuously collects and analyzes storage metrics for each of these buckets, providing real-time visibility into how much data is being stored over time. This allows data engineers and administrators to proactively monitor usage trends, identify unexpected spikes, and ensure that storage capacity remains within defined operational thresholds.
+
+CloudWatch Metrics
+
+CloudWatch Metrics are configured to capture the size of each bucket at regular intervals. These metrics help track storage growth patterns, which are essential for capacity planning, cost optimization, and identifying inefficiencies in data retention. By analyzing historical trends over the monitoring period, stakeholders can make informed decisions about data archival, deletion, or optimization.
+
+CloudWatch Alarms
+
+To prevent potential overuse of resources, CloudWatch Alarms have been configured for each bucket. These alarms are triggered when the bucket size exceeds predefined storage thresholds, ensuring timely notifications and allowing for immediate corrective actions. Notifications can be sent via Amazon SNS (Simple Notification Service) or integrated with automated remediation processes.
+
+Monitoring Configuration
+
+For the purposes of this report, the monitoring period spans 3 months, with the following storage limits assigned to each S3 bucket:
+
+Raw bucket: 200,000 units
+
+Transformed (trf) bucket: 500,000 units
+
+Curated (cur) bucket: 100,000 units
+
+These limits are set based on expected data volumes and operational requirements. Exceeding these thresholds may indicate inefficiencies in the ETL pipeline, delays in archival processes, or unexpected increases in incoming data volume. With CloudWatch in place, such events can be detected early and resolved quickly to maintain system stability and avoid unnecessary storage costs.
+
+Figure 2.14 Cloud Watch Dashboard 
+
+<img width="623" alt="Screenshot 2025-03-26 at 8 58 15 PM" src="https://github.com/user-attachments/assets/8abeeedf-6318-4ec3-bf68-e0ee2b613e83" />
+
+Note:screenshot taken from my aws console
+
+
+AWS CloudTrail is like a security camera for your Amazon Web Services (AWS) account. It keeps track of everything people do—like logging in, changing settings, or using services. This is super helpful if you want to see who did what, when they did it, and from where.
+
+It’s mainly used to check for mistakes, find out if someone did something they weren’t supposed to, or to just keep a record of everything for safety and rules (aka compliance). Once it's set up, CloudTrail automatically creates logs—kind of like a digital diary of all the activity happening in your account.
+
+
+Figure 2.15 Cloud Trail for S3 Bucket 
+
+<img width="622" alt="Screenshot 2025-03-26 at 9 01 05 PM" src="https://github.com/user-attachments/assets/700b42de-9266-4c68-9e8b-88e03fa89d8c" />
+
+Note:screenshot taken from my aws console
+
+
+
+
+
+
+
+
+
 
 
 
