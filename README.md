@@ -48,6 +48,9 @@ Dataset: 3-1-1 service request:
  https://opendata.vancouver.ca/explore/dataset/3-1-1-service-requests/table/?disjunctive.service_request_type&disjunctive.status&disjunctive.channel&disjunctive.local_area&disjunctive.department&disjunctive.closure_reason 
 
  # Methodology
+
+ # 1-	Data Collection and Preparation
+
  **Data Ingestion**
 
 The data ingestion stage is responsible for collecting, storing, and organizing raw service request data before further processing and analysis. This step ensures that data is efficiently structured for querying and retrieval in downstream processes.
@@ -336,12 +339,177 @@ Note:screenshot taken from my aws console
 The image below displays the AWS Glue Console's Data Catalog Tables section. It shows two tables—sev_req_metric and sev_req_trf_systems—both stored in the service-request-data-catalog database with data located in Amazon S3 and classified in Parquet format. 
 
 
-Figure: 4.13  New metrics table for summarized result 
+Figure: 1.12  New metrics table for summarized result 
 
 <img width="626" alt="New metrics table" src="https://github.com/user-attachments/assets/f7b7e7ea-0689-4063-95cb-d53f4d725aaf" />
 
 Note:screenshot taken from my aws console
 
+
+# 2-	Descriptive Statistics
+
+The 3-1-1 service operated by the City of Vancouver is a vital non-emergency communication channel that enables residents to report a wide range of local issues such as potholes, graffiti, noise complaints, streetlight outages, and illegal garbage dumping. This system is designed to streamline the handling of non-urgent municipal concerns while ensuring that the 9-1-1 emergency line remains available for critical and life-threatening situations. By providing a direct line to civic services, 3-1-1 contributes significantly to the upkeep of public infrastructure and the overall quality of life in Vancouver’s neighborhoods.
+
+As urban populations grow and cities face increasing demands on public resources, the data generated from 3-1-1 service requests has become an important source of information for municipal planning and decision-making. Each service request represents a real-time interaction between residents and city services, offering insights into the issues that matter most to the public. By analyzing this data through descriptive statistical methods, we can uncover patterns, assess service delivery performance, and detect recurring problems that may otherwise go unnoticed.
+
+The primary objective of this proposal is to conduct a descriptive statistical analysis of 3-1-1 service requests in Vancouver, focusing on three key areas: the rate of requests over time, the nature and categorization of the issues reported, and their geographic distribution across the city. This analysis seeks to identify trends in public service demands, highlight neighborhoods or districts with higher concentrations of reported issues, and provide evidence-based recommendations that can support better prioritization, faster response times, and more effective use of city resources.
+
+
+Descriptive Question 1: Top 10 most common service requests 
+
+This query helps identify the most common issues people report, so the city can manage resources better and improve services. The result of this query showed that the most common issue was vegetation encroachment of city property cases followed by abandoned non-recyclable small cases' identifying these will help us improve response and find ways to reduce problems. 
+
+
+Figure 2.1  SQL Query and result for question 1 using Athena 
+
+<img width="620" alt="SQL Query  1" src="https://github.com/user-attachments/assets/99b6f660-e7df-4c05-9082-7515a5994735" />
+
+Note:screenshot taken from my aws console
+
+The SQL query groups data by the service_request_type column from the sev_req_trf_systems table and counts the total number of requests for each type, ordering them in descending order and limiting the result to the top 10 request types. The results table shows that the most frequently reported issue is "Vegetation Encroachment of City Property Case" with 52 requests, followed by "Abandoned Non-Recyclables-Small Case" (33 requests) and "Street Cleaning and Debris Pick Up Case" (30 requests). This analysis provides a quick overview of the most common non-emergency issues reported by residents, helping the city prioritize maintenance and resource allocation more effectively. 
+
+
+
+ 
+Descriptive Question 2: Service request distribution by local area. 
+
+This query identifies how service requests are distributed by local areas and identifying the high problem areas so the city can manage resources better and improve services. This showed downtown had the highest with call type Abandoned Non-Recyclables-Small Case. 
+
+
+Figure 2.2 SQL Query and result for question 2 using Athena 
+
+<img width="624" alt="SQL Query 2" src="https://github.com/user-attachments/assets/9ef87fd9-9965-4364-b037-67f3f11f700a" />
+
+Note:screenshot taken from my aws console
+
+
+The SQL query groups the data by both local_area and service_request_type, and then counts the number of requests for each combination. The results are ordered alphabetically by local 
+area and then by the frequency of service requests in descending order. The visible portion of the results shows that in the Arbutus Ridge neighborhood, multiple types of service requests were logged, including "Water Conservation Violation Case" (2 requests), as well as other issues like "Sanitation Operations Inquiry" and "Abandoned Non-Recyclables" with 1 request each. 
+This analysis is useful for identifying which types of non-emergency issues are reported in specific areas, allowing city officials to localize maintenance efforts and tailor responses based on neighborhood-specific concerns.
+
+
+**Data Security**
+
+AWS Key Management Service (KMS) plays a critical role in securing data stored in Amazon S3 by providing robust encryption for data at rest. In this architecture, KMS is used to encrypt all objects stored in the S3 buckets, including the raw, transformed (trf), and curated (cur) data layers, as illustrated in Figures 2.4, 2.6, and 4.9 respectively. This ensures that all data, regardless of its processing stage, is protected from unauthorized access and meets stringent security and compliance requirements.
+
+In addition to encryption, versioning is enabled on each S3 bucket. This feature maintains historical versions of every object stored, which is particularly useful for tracking changes, recovering from accidental deletions or overwrites, and supporting auditability. By preserving older versions of data, the system provides an added layer of data integrity and operational resilience.
+
+To further enhance data durability and disaster recovery, S3 replication rules are configured to automatically replicate data from the primary buckets to designated backup buckets, as depicted in Figures 2.5, 4.8, and 4.10. This cross-region or same-region replication ensures that a secondary copy of the data is always available, supporting business continuity, compliance with data retention policies, and faster recovery in the event of service disruptions or data loss in the primary environment.
+
+
+Figure 2.3 Creating the Key in KMS 
+
+<img width="630" alt=" Key in KMS " src="https://github.com/user-attachments/assets/9fafe3f1-fdda-4cf3-8a3f-f199ce75a5b5" />
+
+Note:screenshot taken from my aws console
+
+
+ A new KMS key has been successfully created, as indicated by the green success banner at the top. The key is named using the alias 3-1-1-req-key-yve, and it has been assigned a unique key ID.
+The key is currently enabled, which means it is active and available for cryptographic operations. It is a symmetric key, meaning the same key is used for both encryption and decryption processes, and it follows the SYMMETRIC_DEFAULT specification. The designated usage for this key is "Encrypt and decrypt", which is typical for securing data at rest in Amazon S3.
+
+This key will be used to encrypt 3-1-1 service request data stored in different S3 buckets (raw, transformed, and curated), ensuring that the data remains protected against unauthorized access while meeting compliance and security standards.
+
+
+Figure 2.4 Raw Bucket: Data Encryption the S3 
+
+<img width="619" alt="Data Encryption the S3" src="https://github.com/user-attachments/assets/955a9f03-6f02-4a7f-8a6a-aaaffe605f27" />
+
+Note:screenshot taken from my aws console
+
+
+Figure 2.5 Raw bucket: Data Replication for the S3 bucket
+
+<img width="615" alt="Screenshot 2025-03-26 at 8 07 21 PM" src="https://github.com/user-attachments/assets/7770353a-8883-4cec-bf72-68f2bb869511" />
+
+Note:screenshot taken from my aws console
+
+
+Figure 2.6 Trf Bucket: Data Encryption for S3 bucket 
+
+<img width="625" alt="Screenshot 2025-03-26 at 8 08 58 PM" src="https://github.com/user-attachments/assets/e34a7e62-d63f-4bb4-b9ca-715277ffc84f" />
+
+Note:screenshot taken from my aws console
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
 
 
 
