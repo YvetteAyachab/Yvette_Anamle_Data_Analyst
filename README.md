@@ -263,6 +263,7 @@ Figure: 1.7  Service request visual ETL
 Note:screenshot taken from my aws console
 
 
+The output schema displayed in the AWS Glue Visual ETL job represents the structure of the finalized, summarized dataset prepared for loading. It contains three key fields: department (string), avg_service_request_outcome (double), and Report_Date_LTZ (timestamp). The department field identifies the originating department for the summarized records, which in this case may remain constant but allows for future scalability across multiple departments. The avg_service_request_outcome field captures the computed average of a key performance metric—likely derived from aggregating numerical values such as costs or counts during transformation. This field uses the double data type to preserve precision in the calculation. Finally, Report_Date_LTZ is a timestamp that automatically records when the summarization job was executed, providing traceability and enabling time-based filtering or auditing. This structured schema ensures the dataset is optimized for querying, reporting, and integration with downstream analytics tools such as Amazon Athena or QuickSight.
 
 
 Figure: 1.8 ETL jobs output schema 
@@ -270,6 +271,84 @@ Figure: 1.8 ETL jobs output schema
 <img width="622" alt="ETL jobs output schema " src="https://github.com/user-attachments/assets/fab7b1cb-e850-4aa3-bc27-d5e3590ba4ef" />
 
 Note:screenshot taken from my aws console
+
+
+
+This successful ETL pipeline job run in AWS confirms that data has been extracted, transformed, and loaded correctly into the target system. The output schema defines the structured format of processed data, including column names, data types (e.g., string, double, timestamp), and ensures data quality. AWS provides a data preview, job run metadata, and validation checks to confirm accuracy. The processed data can then be integrated with services like Amazon S3, Redshift, or RDS for further analysis, reporting, or machine learning applications.
+
+
+
+Figure: 1.9 
+
+Pipeline job run output 
+
+<img width="623" alt="Pipeline job run output " src="https://github.com/user-attachments/assets/ff0e3129-1405-4391-b498-8a914002bea3" />
+
+Note:screenshot taken from my aws console
+
+
+The image displays in figure 1.10 contains the contents of an Amazon S3 bucket under the path:sev-req-cur-yve/3-1-1-service-request/metrics/systems/Report_Date_LTZ=2025-03-02 21:45:56.8412/.
+
+This folder contains summarized data organized by department under various engineering-related systems. Specifically, it includes 13 departmental folders, each representing a subset of metrics or reports generated for that timestamp. The departments include:
+
+ENG – Film and Special Events Office
+
+ENG – Integrated Graffiti Management
+
+ENG – Sanitation Services
+
+ENG – Sewer Operations
+
+ENG – Solid Waste Programs
+
+ENG – Street Use Management
+
+ENG – Streets Design Branch
+
+ENG – Streets Furniture
+
+ENG – Streets Operations
+
+ENG – Traffic and Data Management
+
+ENG – Traffic and Electrical Operations and Design
+
+ENG – Waterworks Design
+
+ENG – Waterworks Operations
+
+Figure 1.10 Summarised data for systems under reported date folder 
+
+<img width="623" alt="ummarised data " src="https://github.com/user-attachments/assets/fde24dab-d90a-4a4c-8242-95fa3f30e7cb" />
+
+Note:screenshot taken from my aws console
+
+This file, located in the Amazon S3 bucket under the User directory for the specified report date, is the result of a user-specific data processing run performed by AWS Glue as part of the  ETL (Extract, Transform, Load) workflow above. It represents the final output of a Glue job that processed raw service request data related specifically to users, transforming it into a summarized format suitable for reporting, analytics, or downstream applications.
+
+Figure: 1.11 Summarized data for user under reported date folder 
+
+<img width="631" alt="user" src="https://github.com/user-attachments/assets/35557e19-7c8a-4130-b74d-3887682e25f5" />
+
+Note:screenshot taken from my aws console
+
+
+
+The image below displays the AWS Glue Console's Data Catalog Tables section. It shows two tables—sev_req_metric and sev_req_trf_systems—both stored in the service-request-data-catalog database with data located in Amazon S3 and classified in Parquet format. 
+
+
+Figure: 4.13  New metrics table for summarized result 
+
+<img width="626" alt="New metrics table" src="https://github.com/user-attachments/assets/f7b7e7ea-0689-4063-95cb-d53f4d725aaf" />
+
+Note:screenshot taken from my aws console
+
+
+
+
+
+
+
+
 
 
 
