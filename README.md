@@ -571,29 +571,98 @@ Note:screenshot taken from my aws console
 # 3-	Data Visualization
 
 
+<img width="1258" alt="Screenshot 2025-03-27 at 1 04 04 PM" src="https://github.com/user-attachments/assets/67dc13eb-3e64-495f-ae23-26d2967ca23d" />
+
+Note:screenshot taken from my draw.io daigram
+
+
+This architectural diagram represents a cloud-based data processing and analytics system designed to collect, process, transform, catalog, and analyze 3-1-1 municipal service request data. Built primarily using AWS services, the system ensures scalability, security, automation, and redundancy across all layers of the data lifecycle—from ingestion to actionable insights.
+
+**Data Ingestion and Raw Data Storage**
+
+At the entry point of the architecture, data is sourced from various service request servers through defined endpoints like:
+
+/service-request/3-1-1-request/year=2025/quarter=01/month=01/day=20/server=SRGYS-Yve
+/service-request/3-1-1-request/year=2025/quarter=01/month=01/day=05/server=SRWA-Yve
+These endpoints suggest a partitioned file structure, allowing data to be organized by year, quarter, month, day, and server, which facilitates efficient querying and filtering during downstream analytics.
+
+The ingestion process is performed by the Data Team or users with specific access roles such as Role D, who interact with the system through the internet to either push raw data into the platform or configure automated pipelines.
+
+The raw data is initially collected and stored in Amazon S3, under the bucket labeled service-request-raw-yve. This acts as the raw zone of the data lake, holding unprocessed data in its original form.
+
+**ETL and Data Transformation Process**
+
+Once data lands in the raw zone, it undergoes ETL (Extract, Transform, Load) operations through a combination of:
+
+AWS Glue Jobs: These automate data extraction from S3, apply transformations (e.g., cleaning, filtering, restructuring), and prepare data for downstream use.
+
+AWS Glue DataBrew: A visual data preparation tool used for profiling, cleansing, normalizing, and enriching data without writing code. It's particularly useful for business users and data analysts.
+
+Key Management Service (KMS): Integrated into the pipeline to ensure secure encryption and key management, especially when handling sensitive or regulated data.
+
+After transformation, the cleaned and structured data is stored in the transformation layer, in a separate S3 bucket labeled service-request-trf-yve.
+
+**Data Summarization and Curation**
+
+Transformed data is further processed and summarized using designated ETL jobs for metric aggregation, performance analysis, and trend reporting. This phase includes:
+
+service-req-Summarization: This module consolidates data by computing aggregate values (e.g., counts per service type, department, or neighborhood).
+
+sev-req-cur-yve: Represents the curated zone where validated, summarized, and analysis-ready datasets are stored. This layer supports operational reporting and business intelligence.
+Additional structured data is stored under:
+
+service-request/3-1-1-request/metrics/ – A dedicated path for storing service metrics such as average closure times or frequency of request types.
+
+
+**Structured Data Catalog and Schema Management**
+
+To enable fast and efficient querying of structured data, the system utilizes the AWS Glue Data Catalog. Under the catalog service-request-data-catalog-yve, two main tables are registered:
+
+3-1-1-request: The core table storing detailed records of service requests, likely including fields like request type, timestamp, location, status, and department.
+
+serv_req_metric: A metrics table that stores aggregated values such as service volume trends, average resolution time, and peak request periods.
+
+The use of a catalog enables schema versioning, column-level metadata, and partition indexing, allowing for seamless integration with query engines like Amazon Athena 
+
+**Redundancy, Replication, and Disaster Recovery** 
+
+To ensure data durability, availability, and disaster recovery, the platform includes three replicated S3 zones:
+
+Replication A
+
+Replication B
+
+Replication C
+
+These serve as geo-redundant backups of the raw, transformed, and curated data. They also help with load balancing, failover support, and business continuity in the event of system failures or outages.
+
+**System Integration and Access Control**
+
+The architecture includes a well-defined role-based access control model, where team members (such as those in the Data Team) and external entities (like Role D) interact with the platform over the internet through secure endpoints.
+
+Access is managed using:
+
+AWS IAM roles and policies
+
+KMS encryption keys
+
+Network configurations that protect data in transit and at rest.
+
+
+
+
 
 # 4-	Customer Segmentation
 
-1. Segment Service Requests by Frequency
-High-volume request types:
-The analysis found that the most common service request was “Vegetation Encroachment of City Property Cases”, followed by “Abandoned Non-Recyclables – Small Cases”. These are high-frequency issues.
+Customer segmentation, in the context of municipal service requests, involves categorizing different types of requests based on frequency, geography, timing, and the responsible departments. This approach enables city managers and analysts to better understand patterns in citizen engagement and to tailor responses and resources accordingly.
 
-2. Trends Across Local Areas
-The document states:
-"Downtown had the highest with call type Abandoned Non-Recyclables – Small Case."
-This indicates that Downtown experiences a higher frequency of certain request types compared to other neighborhoods.
+One of the key segmentation strategies applied was by frequency of service requests. The analysis revealed that the most commonly submitted service request was for “Vegetation Encroachment on City Property,” followed closely by “Abandoned Non-Recyclables – Small Cases.” These high-volume categories signal recurring issues that likely require prioritized resource allocation, ongoing monitoring, and possibly preventive community outreach or policy adjustments.
 
-3. Request Types by Time Patterns
-The dataset uses partitioning by year, quarter, month, day, enabling seasonal analysis.The data structure is set up to analyze time-based trends, such as:
+Segmentation by geographic location uncovered trends across neighborhoods, with Downtown Vancouver registering the highest number of requests—particularly for abandoned small non-recyclable items. This pattern is likely influenced by the dense urban setting, elevated population flow, and higher visibility of public issues. Understanding these local area trends is essential for deploying targeted clean-up operations or awareness campaigns in zones with elevated need.
 
-Increases in vegetation encroachment during growing seasons (spring/summer).
+In terms of time-based segmentation, the dataset supports partitioning by various timeframes—year, quarter, month, and day. This structure facilitates the identification of seasonal or cyclical trends. For example, reports of vegetation encroachment typically rise during the spring and summer when plant growth accelerates. In contrast, requests involving abandoned items tend to spike during post-holiday periods or around the end of rental cycles, reflecting behavioral patterns associated with moving and waste disposal.
 
-Spikes in abandoned item reports post-holiday seasons.
-
-Departments with Highest Volume of Service Requests
-During data summarization, the document notes:
-“Grouped by the 'department' field, the aggregation function is set to compute the average of the service_request_open_timestamp.”
-This indicates that request volumes by department were aggregated. While exact department names aren't listed in the excerpt, the ETL setup enables identification of which departments handle the most requests.
+Finally, service requests were also segmented by department, using aggregation functions based on the ‘department’ field. Although the specific department names were not provided in the summary, the system’s configuration allows for grouping and analyzing requests to determine which departments consistently receive the highest volume of cases. This segmentation supports workforce planning, performance tracking, and inter-departmental coordination by highlighting areas of high operational demand.
 
 
 Assess Request Closure Times Across Segments
@@ -606,76 +675,25 @@ These fields are used to assess request lifecycle duration. Though exact closure
 # 5-	Insights and Findings
 
 1. High-Frequency Service Request Types
-   
-Analysis of the service request data revealed that “Vegetation Encroachment on City Property” is the most frequently reported issue. This may include overgrown hedges, tree branches blocking signs, or plants spilling onto sidewalks, which can impact pedestrian safety and visibility.
 
-The second most reported issue is “Abandoned Non-Recyclable Small Items”, such as furniture, mattresses, or miscellaneous debris left in public spaces.
-These types of requests reflect both environmental maintenance challenges and possible gaps in public awareness or enforcement regarding disposal guidelines.
-
-Implications:
-
-Increased investment in routine landscaping and vegetation control.
-
-Improved public education campaigns or enforcement around proper disposal practices.
+The analysis of service request records highlighted “Vegetation Encroachment on City Property” as the most frequently reported issue. This category encompasses a range of concerns such as overgrown hedges, tree branches obstructing signage, and plants extending onto sidewalks. These issues can significantly impact pedestrian visibility and safety, especially in high-traffic areas or zones with limited mobility access. The prevalence of these requests suggests a need for more frequent maintenance schedules or community outreach on property boundary responsibilities. Closely following in frequency are reports related to “Abandoned Non-Recyclable Small Items.” This includes discarded furniture, mattresses, electronics, and miscellaneous debris that have been left in public spaces. These issues not only affect the aesthetics of urban environments but also reflect broader challenges in waste management, including gaps in public education or enforcement around proper disposal methods.
 
 2. Geographic Distribution of Requests
-   
-The data showed clear geographic concentration patterns, with Downtown Vancouver recording the highest number of service requests, particularly those related to abandoned items.
 
-This is expected due to the higher population density, commercial activity, and public foot traffic.
-Other neighborhoods may report fewer issues, but this might not always reflect lower problem incidence, it could suggest underreporting or less awareness of the 3-1-1 system.
-
-Implications:
-
-Consider allocating more resources (e.g., crews, budget) to Downtown.
-
-Launch outreach programs in lower-reporting areas to educate residents on how to use the 3-1-1 service effectively.
+The geographic analysis of service requests revealed a strong spatial concentration, with Downtown Vancouver recording the highest volume of reports, particularly related to abandoned items. This trend is consistent with expectations, given the area’s high population density, intense commercial activity, and elevated levels of public foot traffic. In contrast, other neighborhoods reported relatively fewer issues, which may not necessarily indicate fewer problems. Rather, it could suggest underreporting or limited public awareness of the 3-1-1 service reporting system. Understanding this geographic disparity can inform targeted outreach efforts or resource allocation to improve engagement and ensure equitable service coverage across all communities.
 
 3. Temporal Patterns in Request Types
-   
-Although explicit seasonal data isn’t included, the platform supports partitioning requests by year, quarter, month, and day, making it ideal for identifying seasonal or time-based trends:
 
-Vegetation encroachment likely spikes in spring and summer, during peak growth periods.
-Abandoned items may rise during student move-outs, holiday seasons, or end-of-month cycles (when renters often move).
-
-Implications:
-
-Predictive planning for seasonal staffing and equipment allocation.
-
-Run public education campaigns before high-incident periods (e.g., spring cleanups or moving seasons).
-
+Although the dataset does not explicitly contain labeled seasonal indicators, the system architecture allows for the segmentation of requests by year, quarter, month, and day. This capability enables temporal trend analysis that can reveal patterns associated with particular times of the year. For instance, vegetation-related complaints are likely to surge during the spring and summer months when plant growth is at its peak. Similarly, abandoned item reports may see seasonal spikes aligned with student move-out periods, holiday seasons, or at the end of monthly leasing cycles when renters relocate. These time-based insights can help inform proactive service planning, such as deploying additional cleanup crews during peak seasons or running public awareness campaigns in anticipation of predictable surges.
 
 4. Service Efficiency and Request Closure Times
-By analyzing the service_request_open_timestamp and service_request_close_date, the system can track how long it takes to resolve each request.
 
-Segmenting closure times by request type, local area, or department can reveal:
-
-Backlogs or inefficiencies
-
-Underperforming zones
-
-Types of requests that typically face delays
-
-Implications:
-
-Define target service level agreements (SLAs) based on request categories.
-
-Investigate long-closure-time segments to uncover root causes (e.g., contractor delays, unclear responsibility, or resource constraints).
+By leveraging timestamps for both when a service request is opened and when it is closed, the system enables detailed tracking of resolution times. Analyzing these durations across different dimensions such as by request type, neighborhood, or responsible department—can expose inefficiencies or service delivery bottlenecks. For example, consistently long closure times in certain zones may indicate resource constraints or procedural delays, while specific request types might inherently require more time due to complexity or inter-departmental coordination. Identifying such patterns is essential for prioritizing improvements, optimizing workflows, and enhancing accountability within municipal operations.
 
 5. Robust Data Infrastructure Enables Scalable Analysis
-The data processing pipeline built using Amazon S3, AWS Glue, Athena, and DataBrew provides:
 
-A scalable, secure, and organized data lake.
+The underlying data infrastructure, built on a suite of AWS services including Amazon S3, AWS Glue, Athena, and DataBrew, forms a robust and scalable platform for managing and analyzing service request data. This cloud-native architecture enables secure storage and real-time updates, while automating key processes such as data cleaning, profiling, and transformation. The system is designed to produce structured and consistent outputs suitable for both system-level dashboards and user-facing analytical tools. This setup not only supports current reporting needs but also provides the scalability and flexibility required for future enhancements, such as predictive modeling or integration with geospatial and IoT data sources.
 
-Real-time updates and automation in data cleaning, profiling, and transformation.
-
-Structured outputs for both system-level and user-level analysis.
-
-Implications:
-
-This platform supports not just descriptive analytics but also predictive modeling, dashboarding, and automated reporting.
-
-Data integrity is maintained through AWS Key Management Service (KMS), versioning, and backup policies.
 
 # 6-	Recommendations
 
