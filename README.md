@@ -390,11 +390,11 @@ This analysis is useful for identifying which types of non-emergency issues are 
 
 **Data Security**
 
-AWS Key Management Service (KMS) plays a critical role in securing data stored in Amazon S3 by providing robust encryption for data at rest. In this architecture, KMS is used to encrypt all objects stored in the S3 buckets, including the raw, transformed (trf), and curated (cur) data layers, as illustrated in Figures 2.4, 2.6, and 4.9 respectively. This ensures that all data, regardless of its processing stage, is protected from unauthorized access and meets stringent security and compliance requirements.
+AWS Key Management Service (KMS) plays a critical role in securing data stored in Amazon S3 by providing robust encryption for data at rest. In this architecture, KMS is used to encrypt all objects stored in the S3 buckets, including the raw, transformed (trf), and curated (cur) data layers, as illustrated in Figures 2.4, 2.6, and 2.8 respectively. This ensures that all data, regardless of its processing stage, is protected from unauthorized access and meets stringent security and compliance requirements.
 
 In addition to encryption, versioning is enabled on each S3 bucket. This feature maintains historical versions of every object stored, which is particularly useful for tracking changes, recovering from accidental deletions or overwrites, and supporting auditability. By preserving older versions of data, the system provides an added layer of data integrity and operational resilience.
 
-To further enhance data durability and disaster recovery, S3 replication rules are configured to automatically replicate data from the primary buckets to designated backup buckets, as depicted in Figures 2.5, 4.8, and 4.10. This cross-region or same-region replication ensures that a secondary copy of the data is always available, supporting business continuity, compliance with data retention policies, and faster recovery in the event of service disruptions or data loss in the primary environment.
+To further enhance data durability and disaster recovery, S3 replication rules are configured to automatically replicate data from the primary buckets to designated backup buckets, as depicted in Figures 2.5, 2.7, and 2.9. This cross-region or same-region replication ensures that a secondary copy of the data is always available, supporting business continuity, compliance with data retention policies, and faster recovery in the event of service disruptions or data loss in the primary environment.
 
 
 Figure 2.3 Creating the Key in KMS 
@@ -429,6 +429,29 @@ Figure 2.6 Trf Bucket: Data Encryption for S3 bucket
 <img width="625" alt="Screenshot 2025-03-26 at 8 08 58 PM" src="https://github.com/user-attachments/assets/e34a7e62-d63f-4bb4-b9ca-715277ffc84f" />
 
 Note:screenshot taken from my aws console
+
+
+Figure 2.7  Trf Bucket: Data Replication for the S3 bucket
+
+<img width="617" alt="Screenshot 2025-03-26 at 8 17 14 PM" src="https://github.com/user-attachments/assets/b229d4d8-a3d9-4caf-9c2c-319e7e098c06" />
+
+Note:screenshot taken from my aws console
+
+
+Figure 2.8 Cur Bucket: Data Encryption for S3 bucket 
+
+<img width="599" alt="Screenshot 2025-03-26 at 8 19 58 PM" src="https://github.com/user-attachments/assets/c65bb6c7-127a-4bf3-83d2-a72a885b0491" />
+
+Note:screenshot taken from my aws console
+
+
+
+Figure 2.9 Cur Bucket: Data Replication for the S3 bucket
+
+<img width="618" alt="Screenshot 2025-03-26 at 8 20 44 PM" src="https://github.com/user-attachments/assets/ca47d9e9-69ab-49bb-808c-5ddb1c13583a" />
+
+Note:screenshot taken from my aws console
+
 
 
 
