@@ -1,5 +1,4 @@
 # Yvette_Anamle_Data_Analyst
-# Descriptive Analysis
 
 # Project Description
 Descriptive Analysis of 3-1-1 service request of the city of vancouver.
@@ -570,6 +569,7 @@ Note:screenshot taken from my aws console
 
 # 3-	Data Visualization
 
+Figure 3.1 draw.io architectural diagram
 
 <img width="1258" alt="Screenshot 2025-03-27 at 1 04 04 PM" src="https://github.com/user-attachments/assets/67dc13eb-3e64-495f-ae23-26d2967ca23d" />
 
@@ -650,6 +650,119 @@ Network configurations that protect data in transit and at rest.
 
 
 
+
+Figure 3.2 Departmental Breakdown of 3-1-1 Service Request Types
+
+<img width="995" alt="Screenshot 2025-03-27 at 2 23 30 PM" src="https://github.com/user-attachments/assets/7cd19d28-7fd1-44a9-9492-962b17d1809c" />
+
+Note:screenshot taken from city of vancouver site.
+
+
+ **High Volume of Abandoned Item Cases Managed by ENG – Sanitation Services**
+ 
+The chart shows a notable peak for the ENG – Sanitation Services department, especially for the Abandoned Mattress Case, with 8,196 reports.
+This indicates that abandoned item cleanup is a major operational burden and likely a recurring issue in public spaces.
+
+It May also suggest a Lack of public awareness or enforcement on proper disposal, Seasonal spikes (e.g., move-outs, evictions) and a need for targeted outreach or infrastructure (e.g., public drop-off programs)
+
+**ENG Departments Dominate Service Volumes**
+
+Multiple ENG (Engineering-related) departments collectively handle the majority of service request types across the city.
+These include sanitation, road maintenance, street signs, trees, and infrastructure.
+Indicates that engineering and operations services are the backbone of 3-1-1 response, and these teams require high resourcing and operational efficiency.
+
+**Variety and Diversity in Request Types**
+
+The service request types are highly diverse, ranging from:
+COVID-19 feedback cases
+
+Animal concerns
+
+Noise complaints
+
+Accessibility and election-related issues
+
+Website or general feedback
+
+Shows that 3-1-1 serves as a multi-purpose civic engagement channel, not just for street-level issues.
+
+
+**Some Departments Handle Niche or Low-Volume Requests**
+
+Departments like ACC (Accessibility) or COV Elections have lower but more focused volumes, e.g., "Election Sign Concern" or "Accessibility Feedback Case".
+These low-frequency cases are critical for inclusivity and democracy, despite not having high volume.
+Insight: Ensure niche departments are not overlooked in performance monitoring or platform support.
+
+
+ **Potential for Duplicate or Overlapping Responsibilities**
+ 
+Some service types (e.g., Feedback Cases, Animal Concerns) appear under multiple departments, which Suggests:
+
+Overlap in responsibility or reporting
+
+Possible inefficiencies or double-handling
+
+
+**Opportunity to Identify Service Gaps**
+
+If some important service types (e.g., homelessness, bylaw enforcement) show low counts, it may not always reflect fewer incidents.It might indicate:
+
+Underreporting
+
+Lack of public awareness
+
+Barriers to access (language, digital literacy)
+
+
+**Visual Patterns Suggest Peak Departments for Optimization**
+
+The tallest bars (high-volume departments) may need:
+
+Workflow optimization
+
+Additional staff or automation
+
+Process redesign
+
+These peak points help prioritize which departments to support first in digital transformation, resource planning, or SLA improvement efforts.
+
+
+Figure 3.4 Distribution of 3-1-1 Service Request Types by Local Area in Vancouver
+
+
+<img width="1025" alt="Screenshot 2025-03-27 at 4 05 56 PM" src="https://github.com/user-attachments/assets/3d53c4aa-dcd4-454b-b6a7-0361cbce306f" />
+
+Note:screenshot taken from city of vancouver site.
+
+
+**Downtown Has the Highest Volume of Service Requests**
+
+The data reveals that Downtown Vancouver records the highest number of 3-1-1 service requests among all local areas, with a particularly high count of 5,550 cases related to “Abandoned Non-Recyclables – Small Case.” This suggests that Downtown is a hotspot for public service demand, likely due to its dense population, high commercial activity, and significant foot traffic. The elevated number of abandoned item cases points to challenges with waste disposal in high-density urban settings. This insight highlights the need for increased resource allocation in the Downtown area—such as more frequent cleanup schedules, public education on disposal guidelines, and better enforcement of waste management bylaws.
+
+
+**Abandoned Non-Recyclables – Small Case” Is a City-Wide Issue**
+
+While Downtown reports the highest number, the “Abandoned Non-Recyclables – Small Case” request type appears consistently across nearly all neighborhoods. This pattern indicates that improper disposal of small non-recyclable items—such as discarded electronics, broken furniture, and household debris—is a widespread issue throughout the city. Its consistent presence suggests not just localized behavior, but a broader citywide challenge in public waste handling. The city may need to consider more accessible disposal services, expanded public drop-off points, and ongoing communication campaigns to encourage responsible waste behavior among residents.
+
+
+**Local Variation Reflects Differences in Community Engagement or Issues**
+
+There is notable variation in service request volumes across neighborhoods. Areas such as Renfrew-Collingwood, West End, Sunset, and Mount Pleasant show moderate to high engagement across multiple service categories. In contrast, communities like Arbutus Ridge, South Cambie, and Shaughnessy report significantly fewer requests. While lower counts may suggest fewer public issues, they could also indicate underreporting due to factors such as limited awareness of the 3-1-1 system, digital access barriers, or cultural hesitancy to report. This insight highlights the importance of equity in civic engagement and the need to assess whether all communities are equally informed and able to access city services.
+
+
+** Service Requests Reflect Diverse Community Needs**
+
+The chart displays a broad spectrum of service request types, ranging from sanitation and waste disposal to animal services, bylaw enforcement, tree maintenance, and construction concerns. This variety emphasizes that 3-1-1 services are used not just for cleanliness or infrastructure, but also for concerns related to urban planning, environmental sustainability, and even wildlife management. Departments must therefore be equipped with multidisciplinary teams and coordinated workflows to respond efficiently to this diversity of community concerns. It also indicates that public expectations from 3-1-1 systems are multifaceted and evolving.
+
+
+**Community-Specific Issues Can Be Identified and Addressed Proactively**
+
+This dataset structure allows for deeper analysis into neighborhood-specific patterns. For instance, certain service types may appear more frequently in particular areas, such as animal control cases near parks, or construction noise complaints in redevelopment zones. By examining the distribution of request types at the local level, city managers can proactively tailor services, outreach efforts, or enforcement strategies to meet the unique needs of each neighborhood. This enables the city to shift from reactive service delivery to more targeted and preventive approaches.
+
+
+**Strong Data Structure Supports Scalable Analysis and Decision-Making**
+
+The structure of this visualization—breaking down service requests by local area and request type—indicates a well-organized and partitioned data model. This setup allows for efficient querying, filtering, and drill-down capabilities, enabling dynamic dashboards and in-depth reporting. It facilitates strategic planning by allowing departments to analyze performance metrics, identify seasonal trends, and compare geographic service patterns. The ability to track and segment this data at such a granular level positions the city to leverage predictive analytics, automate alerts, and design data-driven service improvements across departments.
 
 
 # 4-	Customer Segmentation
