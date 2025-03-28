@@ -787,23 +787,23 @@ These fields are used to assess request lifecycle duration. Though exact closure
 
 # 5-	Insights and Findings
 
-1. High-Frequency Service Request Types
+**High-Frequency Service Request Types**
 
 The analysis of service request records highlighted “Vegetation Encroachment on City Property” as the most frequently reported issue. This category encompasses a range of concerns such as overgrown hedges, tree branches obstructing signage, and plants extending onto sidewalks. These issues can significantly impact pedestrian visibility and safety, especially in high-traffic areas or zones with limited mobility access. The prevalence of these requests suggests a need for more frequent maintenance schedules or community outreach on property boundary responsibilities. Closely following in frequency are reports related to “Abandoned Non-Recyclable Small Items.” This includes discarded furniture, mattresses, electronics, and miscellaneous debris that have been left in public spaces. These issues not only affect the aesthetics of urban environments but also reflect broader challenges in waste management, including gaps in public education or enforcement around proper disposal methods.
 
-2. Geographic Distribution of Requests
+**Geographic Distribution of Requests**
 
 The geographic analysis of service requests revealed a strong spatial concentration, with Downtown Vancouver recording the highest volume of reports, particularly related to abandoned items. This trend is consistent with expectations, given the area’s high population density, intense commercial activity, and elevated levels of public foot traffic. In contrast, other neighborhoods reported relatively fewer issues, which may not necessarily indicate fewer problems. Rather, it could suggest underreporting or limited public awareness of the 3-1-1 service reporting system. Understanding this geographic disparity can inform targeted outreach efforts or resource allocation to improve engagement and ensure equitable service coverage across all communities.
 
-3. Temporal Patterns in Request Types
+**Temporal Patterns in Request Types**
 
 Although the dataset does not explicitly contain labeled seasonal indicators, the system architecture allows for the segmentation of requests by year, quarter, month, and day. This capability enables temporal trend analysis that can reveal patterns associated with particular times of the year. For instance, vegetation-related complaints are likely to surge during the spring and summer months when plant growth is at its peak. Similarly, abandoned item reports may see seasonal spikes aligned with student move-out periods, holiday seasons, or at the end of monthly leasing cycles when renters relocate. These time-based insights can help inform proactive service planning, such as deploying additional cleanup crews during peak seasons or running public awareness campaigns in anticipation of predictable surges.
 
-4. Service Efficiency and Request Closure Times
+**Service Efficiency and Request Closure Times**
 
 By leveraging timestamps for both when a service request is opened and when it is closed, the system enables detailed tracking of resolution times. Analyzing these durations across different dimensions such as by request type, neighborhood, or responsible department—can expose inefficiencies or service delivery bottlenecks. For example, consistently long closure times in certain zones may indicate resource constraints or procedural delays, while specific request types might inherently require more time due to complexity or inter-departmental coordination. Identifying such patterns is essential for prioritizing improvements, optimizing workflows, and enhancing accountability within municipal operations.
 
-5. Robust Data Infrastructure Enables Scalable Analysis
+**Robust Data Infrastructure Enables Scalable Analysis**
 
 The underlying data infrastructure, built on a suite of AWS services including Amazon S3, AWS Glue, Athena, and DataBrew, forms a robust and scalable platform for managing and analyzing service request data. This cloud-native architecture enables secure storage and real-time updates, while automating key processes such as data cleaning, profiling, and transformation. The system is designed to produce structured and consistent outputs suitable for both system-level dashboards and user-facing analytical tools. This setup not only supports current reporting needs but also provides the scalability and flexibility required for future enhancements, such as predictive modeling or integration with geospatial and IoT data sources.
 
@@ -942,6 +942,33 @@ Curated Outputs – Clean datasets for user reports.
 System Outputs – Logs and files for internal processing.
 
 Report Date Field – Used to sort and group final reports.
+
+
+# Deliverables
+A comprehensive report covering methodology, insights, and strategic recommendations. 
+
+Visual dashboards to explore service requests by type, department, and area. Include filters and drilldowns for dynamic analysis.
+
+Map-based view of service request density across neighborhoods. Highlights regional hotspots and supports field team deployment.
+
+Charts showing service request trends over months, quarters, or seasons. Reveals patterns like seasonal spikes or long-term growth.
+
+A quick-reference page listing key performance indicators from the data. Ideal for executive briefings and progress tracking
+
+Overview of encryption, access control, and compliance measures used. Ensures privacy and responsible handling of service data.
+
+Detailed workflow of how raw data is collected, cleaned, and stored. Includes architecture diagrams and toolchain explanations.
+
+Step-by-step actions to put insights into practice. Includes owners, timelines, and estimated resource needs.
+
+
+
+
+# Reference 
+
+AWS Academy. (2022). AWS Academy Cloud Foundations. Retrieved from AWS Academy: https://awsacademy.instructure.com/courses/106917/modules 
+
+City of Vancouver. (2025). Business licences [Dataset]. Open Data Portal. Retrieved February 21, 2025, from https://opendata.vancouver.ca/explore/dataset/business-licences/information/ 
 
 
 
